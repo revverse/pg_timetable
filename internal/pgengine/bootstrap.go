@@ -237,7 +237,7 @@ func (pge *PgEngine) ExecuteSchemaScripts(ctx context.Context) error {
 			sqlName := sqlNames[i]
 			pge.l.Info("Executing script: ", sqlName)
 			if _, err = pge.ConfigDb.Exec(ctx, sql); err != nil {
-				pge.l.WithError(err).Error("Script execution failed")
+				// pge.l.WithError(err).Error("Script execution failed")
 				// pge.l.Warn("Dropping \"timetable\" schema...")
 				// _, err = pge.ConfigDb.Exec(ctx, "DROP SCHEMA IF EXISTS timetable CASCADE")
 				// if err != nil {
