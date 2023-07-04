@@ -238,11 +238,11 @@ func (pge *PgEngine) ExecuteSchemaScripts(ctx context.Context) error {
 			pge.l.Info("Executing script: ", sqlName)
 			if _, err = pge.ConfigDb.Exec(ctx, sql); err != nil {
 				pge.l.WithError(err).Error("Script execution failed")
-				pge.l.Warn("Dropping \"timetable\" schema...")
-				_, err = pge.ConfigDb.Exec(ctx, "DROP SCHEMA IF EXISTS timetable CASCADE")
-				if err != nil {
-					pge.l.WithError(err).Error("Schema dropping failed")
-				}
+				// pge.l.Warn("Dropping \"timetable\" schema...")
+				// _, err = pge.ConfigDb.Exec(ctx, "DROP SCHEMA IF EXISTS timetable CASCADE")
+				// if err != nil {
+				// 	pge.l.WithError(err).Error("Schema dropping failed")
+				// }
 				return err
 			}
 			pge.l.Info("Schema file executed: " + sqlName)
