@@ -1,3 +1,5 @@
+CREATE SCHEMA timetable;
+
 CREATE TABLE timetable.migration(
     id INT8 NOT NULL,
     version TEXT NOT NULL,
