@@ -53,8 +53,11 @@ type PgEngine struct {
 	chainSignalChan chan ChainSignal
 }
 
-var sqls = []string{sqlDDL, sqlJSONSchema, sqlCronFunctions, sqlJobFunctions}
-var sqlNames = []string{"DDL", "JSON Schema", "Cron Functions", "Job Functions"}
+// var sqls = []string{sqlDDL, sqlJSONSchema, sqlCronFunctions, sqlJobFunctions}
+// var sqlNames = []string{"DDL", "JSON Schema", "Cron Functions", "Job Functions"}
+
+var sqls = []string{sqlDDL}
+var sqlNames = []string{"DDL"}
 
 // New opens connection and creates schema
 func New(ctx context.Context, cmdOpts config.CmdOptions, logger log.LoggerHookerIface) (*PgEngine, error) {
@@ -229,7 +232,7 @@ func (pge *PgEngine) ExecuteSchemaScripts(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	if !exists {
+	if exists {
 		for i, sql := range sqls {
 			sqlName := sqlNames[i]
 			pge.l.Info("Executing script: ", sqlName)
