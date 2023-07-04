@@ -228,11 +228,16 @@ func (pge *PgEngine) ExecuteCustomScripts(ctx context.Context, filename ...strin
 // ExecuteSchemaScripts executes initial schema scripts
 func (pge *PgEngine) ExecuteSchemaScripts(ctx context.Context) error {
 	var exists bool
+	var migrationNotNeeded bool
 	err := pge.ConfigDb.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM pg_namespace WHERE nspname = 'timetable')").Scan(&exists)
 	if err != nil {
 		return err
 	}
-	if exists {
+	err = pge.ConfigDb.QueryRow(ctx, "SELECT EXISTS (  SELECT 1 from migration where id=0  )").Scan(&migrationNotNeeded)
+	if err != nil {
+		return err
+	}
+	if (exists) && (!migrationNotNeeded) {
 		for i, sql := range sqls {
 			sqlName := sqlNames[i]
 			pge.l.Info("Executing script: ", sqlName)
