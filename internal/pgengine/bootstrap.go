@@ -233,7 +233,7 @@ func (pge *PgEngine) ExecuteSchemaScripts(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	err = pge.ConfigDb.QueryRow(ctx, "SELECT EXISTS (  SELECT 1 from migration where id=0  )").Scan(&migrationNotNeeded)
+	err = pge.ConfigDb.QueryRow(ctx, "SELECT EXISTS ( SELECT FROM pg_tables WHERE tablename  = 'migration' ) ").Scan(&migrationNotNeeded)
 	if err != nil {
 		return err
 	}
